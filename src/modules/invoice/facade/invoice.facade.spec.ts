@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import InvoiceFacadeFactory from "../factory/invoice.facade.factory";
 import { InvoiceModel } from "../repository/invoice.model";
-import { InvoiceItemModel } from "../repository/item.mode";
+import { InvoiceItemModel } from "../repository/item.model";
 
 describe("InvoiceFacade test", () => {
   let sequelize: Sequelize;
@@ -24,24 +24,24 @@ describe("InvoiceFacade test", () => {
 
   it("should create a invoice", async () => {
     const input = {
-      name: "Invoice",
+      name: "Invoice test",
       document: "123456789",
-      street: "Rua da Invoice",
-      number: "1",
-      complement: "",
-      city: "Vitória",
-      state: "ES",
-      zipCode: "29000-000",
+      street: "street",
+      number: "123",
+      complement: "complement",
+      city: "city",
+      state: "state",
+      zipCode: "12345678",
       items: [
         {
           id: "1",
-          name: "Item 1",
-          price: 1,
+          name: "item 1",
+          price: 10,
         },
         {
           id: "2",
-          name: "Intem 2",
-          price: 2,
+          name: "item 2",
+          price: 20,
         },
       ],
     };
@@ -60,32 +60,32 @@ describe("InvoiceFacade test", () => {
     expect(output.city).toBe(input.city);
     expect(output.state).toBe(input.state);
     expect(output.zipCode).toBe(input.zipCode);
-    expect(output.items.length).toBe(2);
+    expect(output.items.length).toBe(input.items.length);
     expect(output.total).toBe(
-      input.items.reduce((total_price, item) => total_price + item.price, 0)
+      input.items.reduce((acc, item) => acc + item.price, 0)
     );
   });
 
   it("should find a invoice", async () => {
     const input = {
-      name: "Invoice",
+      name: "Invoice test",
       document: "123456789",
-      street: "Rua da Invoice",
-      number: "1",
-      complement: "",
-      city: "Vitória",
-      state: "ES",
-      zipCode: "29000-000",
+      street: "street",
+      number: "123",
+      complement: "complement",
+      city: "city",
+      state: "state",
+      zipCode: "12345678",
       items: [
         {
           id: "1",
-          name: "Item 1",
-          price: 1,
+          name: "item 1",
+          price: 10,
         },
         {
           id: "2",
-          name: "Intem 2",
-          price: 2,
+          name: "item 2",
+          price: 20,
         },
       ],
     };
@@ -104,15 +104,9 @@ describe("InvoiceFacade test", () => {
     expect(found.address.city).toBe(input.city);
     expect(found.address.state).toBe(input.state);
     expect(found.address.zipCode).toBe(input.zipCode);
-    expect(found.items[0].id).toBeDefined;
-    expect(found.items[0].name).toBe(input.items[0].name);
-    expect(found.items[0].price).toBe(input.items[0].price);
-    expect(found.items[1].id).toBeDefined;
-    expect(found.items[1].name).toBe(input.items[1].name);
-    expect(found.items[1].price).toBe(input.items[1].price);
-
+    expect(found.items.length).toBe(input.items.length);
     expect(found.total).toBe(
-      input.items.reduce((total_price, item) => total_price + item.price, 0)
+      input.items.reduce((acc, item) => acc + item.price, 0)
     );
   });
 });

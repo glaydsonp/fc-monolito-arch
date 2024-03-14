@@ -1,4 +1,3 @@
-
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
 import Address from "../../domain/address.vo";
@@ -8,10 +7,10 @@ import InvoiceGateway from "../../gateway/invoice.gateway";
 import {
   GenerateInvoiceUseCaseInputDto,
   GenerateInvoiceUseCaseOutputDto,
-} from "./generate-invoice.use-case.dto";
+} from "./generate.usecase.dto";
 
 export default class GenerateInvoiceUseCase implements UseCaseInterface {
-  constructor(private readonly invoiceGateway: InvoiceGateway) { }
+  constructor(private readonly invoiceGateway: InvoiceGateway) {}
 
   async execute(
     input: GenerateInvoiceUseCaseInputDto
@@ -26,16 +25,14 @@ export default class GenerateInvoiceUseCase implements UseCaseInterface {
     return new Invoice({
       name: input.name,
       document: input.document,
-      address: new Address(
-        {
-          street: input.street,
-          number: input.number,
-          complement: input.complement,
-          city: input.city,
-          state: input.state,
-          zipCode: input.zipCode,
-        }
-      ),
+      address: new Address({
+        street: input.street,
+        number: input.number,
+        complement: input.complement,
+        city: input.city,
+        state: input.state,
+        zipCode: input.zipCode,
+      }),
       items: input.items.map(
         (item) =>
           new Product({

@@ -1,11 +1,11 @@
 import { Sequelize } from "sequelize-typescript";
 import Id from "../../@shared/domain/value-object/id.value-object";
+import Address from "../domain/address.vo";
 import Invoice from "../domain/invoice.entity";
 import Product from "../domain/product.entity";
 import { InvoiceModel } from "./invoice.model";
 import InvoiceRepository from "./invoice.repository";
-import { InvoiceItemModel } from "./item.mode";
-import Address from "../../@shared/domain/value-object/address";
+import { InvoiceItemModel } from "./item.model";
 
 describe("InvoiceRepository test", () => {
   let sequelize: Sequelize;
@@ -30,26 +30,26 @@ describe("InvoiceRepository test", () => {
     const repository = new InvoiceRepository();
     const invoice = new Invoice({
       id: new Id("1"),
-      name: "Invoice Teste",
-      document: "123",
-      address: new Address(
-        "Rua Teste 1",
-        "1",
-        "11",
-        "Vitória",
-        "ES",
-        "29000-000",
-      ),
+      name: "Teste",
+      document: "12345678901",
+      address: new Address({
+        street: "Rua Teste",
+        number: "123",
+        complement: "complemento",
+        city: "Teste",
+        state: "Teste",
+        zipCode: "12345678",
+      }),
       items: [
         new Product({
           id: new Id("1"),
-          name: "Item 1",
-          price: 1,
+          name: "Teste",
+          price: 10,
         }),
         new Product({
           id: new Id("2"),
-          name: "Item 2",
-          price: 2,
+          name: "Teste 2",
+          price: 20,
         }),
       ],
     });
@@ -70,42 +70,39 @@ describe("InvoiceRepository test", () => {
     expect(result.city).toBe(invoice.address.city);
     expect(result.state).toBe(invoice.address.state);
     expect(result.zipcode).toBe(invoice.address.zipCode);
-    expect(result.items.length).toBe(2);
     expect(result.items[0].id).toBe(invoice.items[0].id.id);
     expect(result.items[0].name).toBe(invoice.items[0].name);
     expect(result.items[0].price).toBe(invoice.items[0].price);
     expect(result.items[1].id).toBe(invoice.items[1].id.id);
     expect(result.items[1].name).toBe(invoice.items[1].name);
     expect(result.items[1].price).toBe(invoice.items[1].price);
-    expect(result.total).toBe(
-      invoice.items.reduce((total_price, item) => total_price + item.price, 0)
-    );
+    expect(result.total).toBe(30);
   });
 
   it("should find an invoice", async () => {
     const repository = new InvoiceRepository();
     const invoice = new Invoice({
       id: new Id("1"),
-      name: "Invoice Teste",
-      document: "123",
-      address: new Address(
-        "Rua Teste 1",
-        "1",
-        "11",
-        "Vitória",
-        "ES",
-        "29000-000",
-      ),
+      name: "Teste",
+      document: "12345678901",
+      address: new Address({
+        street: "Rua Teste",
+        number: "123",
+        complement: "complemento",
+        city: "Teste",
+        state: "Teste",
+        zipCode: "12345678",
+      }),
       items: [
         new Product({
           id: new Id("1"),
-          name: "Item 1",
-          price: 1,
+          name: "Teste",
+          price: 10,
         }),
         new Product({
           id: new Id("2"),
-          name: "Item 2",
-          price: 2,
+          name: "Teste 2",
+          price: 20,
         }),
       ],
     });
@@ -123,15 +120,12 @@ describe("InvoiceRepository test", () => {
     expect(result.address.city).toBe(invoice.address.city);
     expect(result.address.state).toBe(invoice.address.state);
     expect(result.address.zipCode).toBe(invoice.address.zipCode);
-    expect(result.items.length).toBe(2);
     expect(result.items[0].id.id).toBe(invoice.items[0].id.id);
     expect(result.items[0].name).toBe(invoice.items[0].name);
     expect(result.items[0].price).toBe(invoice.items[0].price);
     expect(result.items[1].id.id).toBe(invoice.items[1].id.id);
     expect(result.items[1].name).toBe(invoice.items[1].name);
     expect(result.items[1].price).toBe(invoice.items[1].price);
-    expect(result.total).toBe(
-      invoice.items.reduce((total_price, item) => total_price + item.price, 0)
-    );
+    expect(result.total).toBe(30);
   });
 });

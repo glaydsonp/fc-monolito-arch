@@ -1,9 +1,10 @@
 import UseCaseInterface from "../../@shared/usecase/use-case.interface";
 import InvoiceFacade from "../facade/invoice.facade";
 import InvoiceFacadeInterface from "../facade/invoice.facade.interface";
+import InvoiceGateway from "../gateway/invoice.gateway";
 import InvoiceRepository from "../repository/invoice.repository";
-import FindInvoiceUseCase from "../usecase/find-invoice/find-invoice.use-case";
-import GenerateInvoiceUseCase from "../usecase/generate-invoice/generate-invoice.use-case";
+import FindInvoiceUseCase from "../usecase/find/find.usecase";
+import GenerateInvoiceUseCase from "../usecase/generate/generate.usecase";
 
 export default class InvoiceFacadeFactory {
   static create(): InvoiceFacadeInterface {

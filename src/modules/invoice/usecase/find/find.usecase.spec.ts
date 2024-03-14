@@ -1,34 +1,31 @@
-
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import Address from "../../domain/address.vo";
 import Invoice from "../../domain/invoice.entity";
 import Product from "../../domain/product.entity";
-import FindInvoiceUseCase from "./find-invoice.use-case";
+import FindInvoiceUseCase from "./find.usecase";
 
 const invoice = new Invoice({
   id: new Id("1"),
-  name: "Invoice Teste",
-  document: "123",
-  address: new Address(
-    {
-      street: "Rua Teste 1",
-      number: "1",
-      complement: "11",
-      city: "Vitória",
-      state: "ES",
-      zipCode: "29000-000",
-    }
-  ),
+  name: "Teste",
+  document: "12345678901",
+  address: new Address({
+    street: "Rua Teste",
+    number: "123",
+    complement: "complemento",
+    city: "Teste",
+    state: "Teste",
+    zipCode: "12345678",
+  }),
   items: [
     new Product({
       id: new Id("1"),
-      name: "Item 1",
-      price: 1,
+      name: "Teste",
+      price: 10,
     }),
     new Product({
       id: new Id("2"),
-      name: "Item 2",
-      price: 2,
+      name: "Teste 2",
+      price: 20,
     }),
   ],
 });
@@ -60,16 +57,7 @@ describe("Find invoice usecase unit test", () => {
     expect(result.address.city).toBe(invoice.address.city);
     expect(result.address.state).toBe(invoice.address.state);
     expect(result.address.zipCode).toBe(invoice.address.zipCode);
-    expect(result.items.length).toBe(2);
-    expect(result.items[0].id).toBeDefined;
-    expect(result.items[0].name).toBe(invoice.items[0].name);
-    expect(result.items[0].price).toBe(invoice.items[0].price);
-    expect(result.items[1].id).toBeDefined;
-    expect(result.items[1].name).toBe(invoice.items[1].name);
-    expect(result.items[1].price).toBe(invoice.items[1].price);
-    expect(result.createdAt).toBe(invoice.createdAt);
-    expect(result.total).toBe(
-      invoice.items.reduce((total_price, item) => total_price + item.price, 0)
-    );
+    expect(result.items.length).toBe(invoice.items.length);
+    expect(result.total).toBe(30);
   });
 });

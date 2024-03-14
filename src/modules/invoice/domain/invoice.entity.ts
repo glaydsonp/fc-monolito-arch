@@ -1,7 +1,7 @@
 import AggregateRoot from "../../@shared/domain/entity/aggregate-root.interface";
 import BaseEntity from "../../@shared/domain/entity/base.entity";
-import Address from "../../@shared/domain/value-object/address";
 import Id from "../../@shared/domain/value-object/id.value-object";
+import Address from "./address.vo";
 import Product from "./product.entity";
 
 type InvoiceProps = {
@@ -33,7 +33,7 @@ export default class Invoice extends BaseEntity implements AggregateRoot {
   }
 
   get total(): number {
-    return this._items.reduce((total_price, item) => total_price + item.price, 0);
+    return this._items.reduce((total, item) => total + item.price, 0);
   }
 
   get items(): Product[] {

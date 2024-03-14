@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
-import { InvoiceItemModel } from "./item.mode";
+import { InvoiceItemModel } from "./item.model";
 
 @Table({
   tableName: "invoices",
